@@ -1,9 +1,12 @@
 const { createStore, applyMiddleware } = require("redux");
 const { fetchTodos } = require("./functions");
-const {
-  delayActionMiddleware,
-  fetchAsyncMiddleware,
-} = require("./middlewares");
+// const {
+//   delayActionMiddleware,
+//   fetchAsyncMiddleware,
+// } = require("./middlewares");
+
+//* Third party thunk middleware
+const thunk = require("redux-thunk");
 
 //* Initial State
 const initailState = {
@@ -38,7 +41,8 @@ const todoReducer = (state = initailState, action) => {
 //* Store
 const store = createStore(
   todoReducer,
-  applyMiddleware(delayActionMiddleware, fetchAsyncMiddleware)
+  //   applyMiddleware(delayActionMiddleware, fetchAsyncMiddleware)
+  applyMiddleware(thunk.default)
 );
 
 //* Subscribe to state changes
@@ -58,6 +62,6 @@ store.subscribe(() => {
 //   type: "todos/fetchTodos",
 // });
 
-//* OR
+//* OR (Thunk function fetchTodos)
 
 store.dispatch(fetchTodos);

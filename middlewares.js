@@ -14,6 +14,7 @@ const delayActionMiddleware = (store) => (next) => (action) => {
   return next(action);
 };
 
+//* OUR CUSTOM THUNK MIDDLEWARE
 const fetchAsyncMiddleware = (store) => (next) => (action) => {
   if (typeof action === "function") {
     return action(store.dispatch, store.getState);
