@@ -1,7 +1,8 @@
 const { createStore, applyMiddleware } = require("redux");
+const { fetchTodos } = require("./functions");
 const {
   delayActionMiddleware,
-  fetchTodosMiddleware,
+  fetchAsyncMiddleware,
 } = require("./middlewares");
 
 //* Initial State
@@ -37,7 +38,7 @@ const todoReducer = (state = initailState, action) => {
 //* Store
 const store = createStore(
   todoReducer,
-  applyMiddleware(delayActionMiddleware, fetchTodosMiddleware)
+  applyMiddleware(delayActionMiddleware, fetchAsyncMiddleware)
 );
 
 //* Subscribe to state changes
@@ -53,6 +54,10 @@ store.subscribe(() => {
 
 //* We need to dispatch a fake action to get data from the server asynchronously and then dispatch the action to update the state in the middleware.
 
-store.dispatch({
-  type: "todos/fetchTodos",
-});
+// store.dispatch({
+//   type: "todos/fetchTodos",
+// });
+
+//* OR
+
+store.dispatch(fetchTodos);
